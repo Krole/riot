@@ -6,6 +6,7 @@ import java.util.List;
 import io.steria.pox3.got.objectives.ObjectiveCard;
 import io.steria.pox3.got.story.House;
 import io.steria.pox3.got.story.HouseFactory;
+import io.steria.pox3.got.tile.World;
 
 /**
  * 
@@ -16,6 +17,7 @@ import io.steria.pox3.got.story.HouseFactory;
  */
 
 public class Game {
+	World world;
 
 	List<Player> players = new ArrayList<>(); // attribut en minuscuke, classe
 												// en majuscule
@@ -29,8 +31,12 @@ public class Game {
 	List<ObjectiveCard> cards;
 	List<Round> rounds = new ArrayList<>();
 
-	public Game() {
+	public Game(World world) {
+		this.world = world;
+	}
 
+	public World getWorld() {
+		return world;
 	}
 
 	public void init() {

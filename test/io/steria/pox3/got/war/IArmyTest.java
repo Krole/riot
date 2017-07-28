@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import io.steria.pox3.got.game.Game;
+import io.steria.pox3.got.game.Player;
 import io.steria.pox3.got.story.House;
 import io.steria.pox3.got.story.HouseFactory;
 import io.steria.pox3.got.tile.Domain;
@@ -15,16 +17,19 @@ public class IArmyTest {
 	IArmy army;
 	World world;
 	Domain winterfell3;
-	Domain winterfell6;
+	Domain winterfell7;
 	Domain erye1;
 	IArmy bigArmy;
 	HouseFactory factory = new HouseFactory();
 	House stark = factory.getStark();
 	House arryn = factory.getArryn();
+	House lannister = factory.getLannister();
+	Player a,b;
+	Game game;
 
 	@Before
 	public void setUp() throws Exception {
-
+		lannister = factory.getLannister();
 		world = new World();
 		world.generate();
 		winterfell3 = (Domain) world.get(3, 2); // on caste a domain pour pas
@@ -32,14 +37,19 @@ public class IArmyTest {
 		army = new Army(3, stark, winterfell3);
 		winterfell3.setArmy(army);
 
-		winterfell6 = (Domain) world.get(3, 3); // on caste a domain pour pas
-												// avoir de l'eaus
-		army = new Army(3, stark, winterfell6);
-		winterfell6.setArmy(army);
+		winterfell7 = (Domain) world.get(3, 3); // on caste a domain pour pas
+												// avoir de l'eau
+		
 
 		erye1 = (Domain) world.get(3, 3);
 		bigArmy = new Army(9, arryn, erye1);
 		erye1.setArmy(bigArmy);
+		winterfell7.setArmy(bigArmy);
+		
+		this.a = new Player(game, "Anne", lannister);
+		this.b = new Player(game, "Nicolas", stark);
+		lannister.setPlayer(a);
+		stark.setPlayer(b);
 	}
 	// no soucy to cast in test
 

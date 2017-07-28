@@ -9,9 +9,10 @@ import io.steria.pox3.got.game.Game;
 import io.steria.pox3.got.game.Player;
 import io.steria.pox3.got.story.House;
 import io.steria.pox3.got.story.HouseFactory;
+import io.steria.pox3.got.tile.World;
 
 public class GameTest {
-	
+	World world;
 	Game game;
 	Player nicolas;
 	Player anne;
@@ -19,15 +20,17 @@ public class GameTest {
 	
 	@Before //pour lancer la fonction avant chaque test
 	public void setUp(){
+		world = new World();
+		world.generate();
 		System.out.println("reinitialize new game");
-		this.game = new Game();
+		this.game = new Game(world);
 		
 		HouseFactory factory = new HouseFactory();
 		this.stark = factory.getStark();
 		this.lannister = factory.getLannister(); //game.houses.get(1)
 		
-		this.anne = new Player("Anne", lannister);
-		this.nicolas = new Player("Nicolas", stark);
+		this.anne = new Player(game, "Anne", lannister);
+		this.nicolas = new Player(game, "Nicolas", stark);
 		
 //this pas obligé en soi mais permet de savoir qu'il s'agit d'un attribut, bleu =attribut
 	}

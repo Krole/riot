@@ -31,16 +31,14 @@ public class RoundTest {
 	public void setUp() throws Exception {
 		world = new World();
 		world.generate();
-		this.game = new Game();
-		
-		this.game = new Game();
+		this.game = new Game(world);		
 		
 		HouseFactory factory = new HouseFactory();
 		this.stark = factory.getStark();
 		this.lannister = factory.getLannister(); //game.houses.get(1)
 		
-		this.a = new Player("Anne", lannister);
-		this.b = new Player("Nicolas", stark);
+		this.a = new Player(game, "Anne", lannister);
+		this.b = new Player(game ,"Nicolas", stark);
 		
 		game.players.add(this.a);
 		game.players.add(this.b);

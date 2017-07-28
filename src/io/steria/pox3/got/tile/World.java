@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import io.steria.pox3.got.story.House;
 import io.steria.pox3.got.story.HouseFactory;
+import io.steria.pox3.got.war.Direction;
 
 public class World {
 
@@ -15,25 +16,23 @@ public class World {
 	public World() {
 		// generate();
 	}
-	
-	public Domain getWinterfell7(){
-		return (Domain) this.get(3,3);
+
+	public Domain getWinterfell7() {
+		return (Domain) this.get(3, 3);
 	}
 
-	public Domain getEyrie1(){
-		return (Domain) this.get(3,4);
+	public Domain getEyrie1() {
+		return (Domain) this.get(3, 4);
 	}
 
-	public Domain getThrone(){
-		return (Domain) this.get(4,7);
-	}
-	
-	public Domain getMeereen(){
-		return (Domain) this.get(6,9);
+	public Domain getThrone() {
+		return (Domain) this.get(4, 7);
 	}
 
+	public Domain getMeereen() {
+		return (Domain) this.get(6, 9);
+	}
 
-	
 	public void generate() {
 		assignFreeDomain(1, 0, 4, 2, "North");
 		assignFreeDomain(8, 6, 2, 2, "Volantis");
@@ -108,8 +107,14 @@ public class World {
 
 	}
 
-	boolean allowMove(Tile origin, Tile destination, boolean boat) {
-		return false;
+	public boolean allowMove(Tile destination, boolean boat) {
+		if (boat){
+			return true;
+		}
+		if(destination instanceof WaterTile){
+			return boat;
+		}
+		return true;
 	}
 
 	boolean isWinter() {
@@ -148,5 +153,39 @@ public class World {
 
 	public Tile get(int x, int y) {
 		return this.tiles[x][y];
+	}
+
+	public Optional<Tile> neighbour(Tile tile, Direction direction) {
+
+		int x = tile.x;
+		int y = tile.y;
+
+		switch (direction) {
+		case SOUTH:
+			y++;
+			break;
+
+		case NORTH:
+			y--;
+			break;
+
+		case EAT:
+			x++;
+			break;
+
+		case WEST:
+			x--;
+			break;
+
+		default:
+			throw new IllegalArgumentException();
+		}
+		if (x < 0 || x >= this.tiles.length || y < 0 || y >= this.tiles[0].length) {
+			return Optional.empty();
+		}
+
+		Tile neighbour = this.tiles[x][y];
+		return Optional.of(neighbour);
+
 	}
 }
